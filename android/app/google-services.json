@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "123459918085",
+    "project_id": "lets-crew",
+    "storage_bucket": "lets-crew.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123459918085:android:130a6e0338ae9145b07f6c",
+        "android_client_info": {
+          "package_name": "com.example.lets_crew"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIWD7-8vsABPgCUtDO2rssqC6upP85gqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
