@@ -102,6 +102,9 @@ flutter:
         - asset: fonts/NotoSansCJKkr-Regular (TTF).ttf
         - asset: fonts/NotoSansCJKkr-Bold (TTF).ttf
           weight: 700
+    - family: MontSerrant
+      fonts:
+        - asset: fonts/Montserrat-Black.otf
   # 두 번째 방법
     - family: ExtraBold
       fonts:
