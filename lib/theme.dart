@@ -11,12 +11,13 @@ double smallFontSize(double size) {
   }
 }
 
-class ITaxiTheme {
+class LetsCrewTheme {
   // static const _lightFillColor = Color(0xffffffff);
 
   static final Color _lightFocusColor = Colors.black.withOpacity(0.12);
 
-  static ThemeData lightThemeData = themeData(lightColorScheme, _lightFocusColor);
+  static ThemeData lightThemeData =
+      themeData(lightColorScheme, _lightFocusColor);
 
   static ThemeData themeData(ColorScheme colorScheme, Color focusColor) {
     return ThemeData(
@@ -80,7 +81,7 @@ class ITaxiTheme {
   );
 
   static TextTheme textThemeDefault = TextTheme(
-    headline1: TextStyle(fontSize: smallFontSize(38), fontFamily: 'Black'),
+    headline1: TextStyle(fontSize: smallFontSize(38), fontFamily: 'Black'),
     headline2: TextStyle(fontSize: smallFontSize(30), fontFamily: 'Bold'),
     headline3: TextStyle(fontSize: smallFontSize(22), fontFamily: 'Bold'),
     subtitle1: TextStyle(fontSize: smallFontSize(18), fontFamily: 'Medium'),
@@ -88,9 +89,13 @@ class ITaxiTheme {
     bodyText1: TextStyle(fontSize: smallFontSize(14), fontFamily: 'Regular'),
     bodyText2: TextStyle(fontSize: smallFontSize(11), fontFamily: 'Regular'),
   );
+  static TextTheme textThemeHeading = TextTheme(
+    headline1: TextStyle(fontSize: smallFontSize(38), fontFamily: 'Montserrat'),
+    headline2: TextStyle(fontSize: smallFontSize(30), fontFamily: 'Bold'),
+  );
 
   static TextTheme textThemeIOS = TextTheme(
-    headline1: TextStyle(fontSize: smallFontSize(40), fontFamily: 'Black'),
+    headline1: TextStyle(fontSize: smallFontSize(40), fontFamily: 'Black'),
     headline2: TextStyle(fontSize: smallFontSize(32), fontFamily: 'Bold'),
     headline3: TextStyle(fontSize: smallFontSize(24), fontFamily: 'Bold'),
     subtitle1: TextStyle(fontSize: smallFontSize(20), fontFamily: 'Medium'),
