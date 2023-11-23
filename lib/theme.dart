@@ -69,7 +69,7 @@ class LetsCrewTheme {
   static const ColorScheme lightColorScheme = ColorScheme(
     primary: Color(0xFFFFFFFF),
     onPrimary: Colors.black,
-    secondary: Color(0xff70b1f2), //Color(0xff3fa9f5) - 기존 color
+    secondary: Color(0xFFFCCF5D), //Color(0xff3fa9f5) - 기존 color
     onSecondary: Color(0xFFFFFFFF),
     error: Color(0xffb00020),
     onError: Colors.white,
@@ -92,6 +92,7 @@ class LetsCrewTheme {
   static TextTheme textThemeHeading = TextTheme(
     headline1: TextStyle(fontSize: smallFontSize(38), fontFamily: 'Montserrat'),
     headline2: TextStyle(fontSize: smallFontSize(30), fontFamily: 'Bold'),
+    bodyText1: TextStyle(fontSize: smallFontSize(18), fontFamily: 'Montserrat'),
   );
 
   static TextTheme textThemeIOS = TextTheme(
