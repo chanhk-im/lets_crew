@@ -68,6 +68,12 @@ class LoginPage extends StatelessWidget {
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
             ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/');
+              },
+              child: Text('next'),
+            ),
           ],
         ),
       ),

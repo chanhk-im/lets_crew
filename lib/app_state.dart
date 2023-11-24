@@ -9,8 +9,6 @@ class AppState {
       FirebaseFirestore.instance.collection('user');
 
   Future<User?> handleGoogleSignIn() async {
-    print("1");
-
     try {
       // Google Sign-In
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
