@@ -40,6 +40,7 @@ dependencies:
   cloud_firestore: ^4.13.0
   provider: ^6.1.1
   firebase_ui_auth: ^1.10.0
+  flutter_screenutil: ^5.9.0
 
 dev_dependencies:
   flutter_test:
@@ -91,5 +92,34 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+  fonts:
+    - family: Seoul
+      fonts:
+        - asset: fonts/SeoulNamsanB.ttf
+          weight: 700
+    - family: NotoSans
+      fonts:
+        - asset: fonts/NotoSansCJKkr-Regular (TTF).ttf
+        - asset: fonts/NotoSansCJKkr-Bold (TTF).ttf
+          weight: 700
+    - family: MontSerrant
+      fonts:
+        - asset: fonts/Montserrat-Black.otf
+  # 두 번째 방법
+    - family: ExtraBold
+      fonts:
+        - asset: fonts/Pretendard-ExtraBold.otf
+    - family: Black
+      fonts:
+        - asset: fonts/Pretendard-Black.otf
+    - family: Bold
+      fonts:
+        - asset: fonts/Pretendard-Bold.otf
+    - family: SemiBold
+      fonts:
+        - asset: fonts/Pretendard-SemiBold.otf
+    - family: Regular
+      fonts:
+        - asset: fonts/Pretendard-Regular.otf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
