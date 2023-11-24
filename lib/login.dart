@@ -1,33 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:lets_crew/theme.dart';
 
+import 'app_state.dart';
+
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = LetsCrewTheme.lightColorScheme;
+    final appState = AppState();
     return Scaffold(
-      appBar: AppBar(
-        title: Text('login'),
-      ),
       body: Center(
         child: Column(
           children: [
             SizedBox(
-              height: 130,
+              height: 250,
             ),
             Text(
               'Let\'s',
               style: LetsCrewTheme.textThemeHeading.headline1,
             ),
             Text(
-              'crew',
+              'Crew',
               style: LetsCrewTheme.textThemeHeading.headline1,
             ),
             SizedBox(height: 114.0), // Optional spacing between text and button
             TextButton(
-              onPressed: () {},
+              onPressed: () async {
+                final user = await appState.handleGoogleSignIn();
+                if (user != null) {
+                  Navigator.pushNamed(context, '/');
+                }
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -44,7 +49,12 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () async {
+                final user = await appState.anonymousLogin();
+                if (user != null) {
+                  Navigator.pushNamed(context, '/');
+                }
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -57,6 +67,12 @@ class LoginPage extends StatelessWidget {
                 fixedSize: MaterialStateProperty.all(Size(320.0, 60.0)),
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/');
+              },
+              child: Text('next'),
             ),
           ],
         ),

@@ -66,6 +66,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '123459918085',
     projectId: 'lets-crew',
     storageBucket: 'lets-crew.appspot.com',
+    iosClientId: '123459918085-282k1dj05l2m3br7qdnk8o68rfsnv500.apps.googleusercontent.com',
     iosBundleId: 'com.example.letsCrew',
   );
 
@@ -75,6 +76,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '123459918085',
     projectId: 'lets-crew',
     storageBucket: 'lets-crew.appspot.com',
+    iosClientId: '123459918085-54bnciob1etfnit7fnavvpj0l5moheek.apps.googleusercontent.com',
     iosBundleId: 'com.example.letsCrew.RunnerTests',
   );
 }
