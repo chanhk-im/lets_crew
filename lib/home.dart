@@ -29,6 +29,15 @@ class HomePage extends StatelessWidget {
             return Scaffold(
               appBar: AppBar(
                 title: Text('HOME'),
+                actions: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/addClub');
+                      },
+                      icon: Icon(
+                        Icons.add,
+                      ))
+                ],
               ),
               drawer: Drawer(
                 backgroundColor: colorScheme.background,
@@ -37,7 +46,7 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 20),
+                      SizedBox(height: 120),
                       ElevatedButton.icon(
                         onPressed: () {},
                         icon: Icon(
@@ -62,7 +71,7 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 40),
+                      SizedBox(height: 20),
                       ElevatedButton.icon(
                         onPressed: () {},
                         icon: Icon(
@@ -87,6 +96,7 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                       ),
+                      SizedBox(height: 10),
                     ],
                   ),
                 ),

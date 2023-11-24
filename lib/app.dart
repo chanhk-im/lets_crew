@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lets_crew/home.dart';
-
+import 'club_add.dart';
 import 'login.dart';
 
 class MyApp extends StatelessWidget {
@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
           routes: {
             '/login': (BuildContext context) => LoginPage(),
             '/': (BuildContext context) => HomePage(),
+            '/addClub':(BuildContext context) => ClubAddPage(),
           },
         );
       },
