@@ -37,16 +37,31 @@ class ClubModel {
 
 class ClubRepository {
   final db = FirebaseFirestore.instance;
-  Future<ClubModel?> readUser(docId) async {
+  Future<ClubModel?> readClub(docId) async {
     try {
       final snapshot = await db.collection('club').doc(docId).get();
 
-      final userData = ClubModel.fromSnapshot(snapshot);
+      final clubData = ClubModel.fromSnapshot(snapshot);
 
-      return userData;
+      return clubData;
     } catch (e) {
       print('Error reading clubs: $e');
       return null;
+    }
+  }
+
+  Future<List<ClubModel>> readAllClubs() async {
+    try {
+      final snapshot = await db.collection('club').get();
+
+      final clubListData = await Future.wait(snapshot.docs.map((e) async {
+        return await ClubModel.fromSnapshot(e);
+      }));
+
+      return clubListData;
+    } catch (e) {
+      print('Error reading products: $e');
+      return [];
     }
   }
 }
