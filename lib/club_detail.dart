@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lets_crew/app_state.dart';
 import 'package:lets_crew/model/club_model.dart';
+import 'package:provider/provider.dart';
 
 class ClubDetailPage extends StatefulWidget {
   final ClubModel club;
@@ -18,6 +21,7 @@ class _ClubDetailPageState extends State<ClubDetailPage> {
   @override
   Widget build(BuildContext context) {
     String titleName = club.name;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -31,15 +35,28 @@ class _ClubDetailPageState extends State<ClubDetailPage> {
         ),
         title: Text(titleName),
         actions: <Widget>[
-          // IconButton(
-          //   icon: const Icon(
-          //     Icons.thumb_up,
-          //     semanticLabel: 'like',
-          //   ),
-          //   onPressed: () {
-          //     likeClub(); // Call the like functionality
-          //   },
-          // ),
+          Consumer<AppState>(builder: (context, appState, _) {
+            return IconButton(
+              icon: Icon(
+                (club.likes.contains(FirebaseAuth.instance.currentUser!.uid) ? Icons.favorite : Icons.favorite_border),
+                semanticLabel: 'like',
+              ),
+              onPressed: () async {
+                await appState.likeProducts(club);
+                // if (club.likes.contains(FirebaseAuth.instance.currentUser!.uid)) {
+                //   print(club.likes);
+                //   setState(() {
+                //     club.likes.add(FirebaseAuth.instance.currentUser!.uid);
+                //   });
+                // } else {
+                //   print(club.likes);
+                //   setState(() {
+                //     club.likes.add(FirebaseAuth.instance.currentUser!.uid);
+                //   });
+                // }
+              },
+            );
+          }),
         ],
       ),
       body: Padding(

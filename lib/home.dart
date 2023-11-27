@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lets_crew/app_state.dart';
 import 'package:lets_crew/model/club_model.dart';
+import 'package:provider/provider.dart';
 import 'app.dart';
 import 'model/user_model.dart';
 import 'theme.dart';
@@ -13,10 +15,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final UserRepository _userRepository = UserRepository();
-  final ClubRepository _clubRepository = ClubRepository();
   final colorScheme = LetsCrewTheme.lightColorScheme;
   Future<List<Widget>> _buildGridCards(BuildContext context) async {
-    List<ClubModel> clubs = await _clubRepository.readAllClubs();
+    List<ClubModel> clubs = context.select<AppState, List<ClubModel>>((value) => value.clubs);
 
     if (clubs.isEmpty) {
       return const <Widget>[];
@@ -58,10 +59,8 @@ class _HomePageState extends State<HomePage> {
                             // ),
                             TextButton(
                               onPressed: () {
-                                ScreenArguments args =
-                                    ScreenArguments(club: club);
-                                Navigator.pushNamed(context, '/club_detail',
-                                    arguments: args);
+                                ScreenArguments args = ScreenArguments(club: club);
+                                Navigator.pushNamed(context, '/club_detail', arguments: args);
                               },
                               child: Text("more"),
                             )
@@ -83,8 +82,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<UserModel?>(
-        future:
-            _userRepository.readUser(FirebaseAuth.instance.currentUser!.uid),
+        future: _userRepository.readUser(FirebaseAuth.instance.currentUser!.uid),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
@@ -128,12 +126,10 @@ class _HomePageState extends State<HomePage> {
                         ),
                         label: Text(
                           isLoggedIn,
-                          style: TextStyle(
-                              color: colorScheme.onPrimary, fontSize: 12),
+                          style: TextStyle(color: colorScheme.onPrimary, fontSize: 12),
                         ),
                         style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent),
+                          backgroundColor: MaterialStateProperty.all(Colors.transparent),
                           elevation: MaterialStateProperty.all(0),
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(
@@ -153,12 +149,10 @@ class _HomePageState extends State<HomePage> {
                         ),
                         label: Text(
                           '모든 동아리 리크루팅 알아보기',
-                          style: TextStyle(
-                              color: colorScheme.onPrimary, fontSize: 12),
+                          style: TextStyle(color: colorScheme.onPrimary, fontSize: 12),
                         ),
                         style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent),
+                          backgroundColor: MaterialStateProperty.all(Colors.transparent),
                           elevation: MaterialStateProperty.all(0),
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(

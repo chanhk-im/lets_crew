@@ -9,6 +9,7 @@ class ClubModel {
   final String compulsory;
   final String forwho;
   final String activity;
+  final List<String> likes;
 
   ClubModel({
     required this.docId,
@@ -19,11 +20,12 @@ class ClubModel {
     required this.compulsory,
     required this.forwho,
     required this.activity,
+    required this.likes,
   });
   factory ClubModel.fromSnapshot(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
     return ClubModel(
-      docId: data['docId'],
+      docId: snapshot.id,
       name: data['name'],
       category: data['category'],
       description: data['description'],
@@ -31,6 +33,7 @@ class ClubModel {
       compulsory: data['compulsory'],
       forwho: data['forwho'],
       activity: data['activity'],
+      likes: List<String>.from(data['likes']),
     );
   }
 }
