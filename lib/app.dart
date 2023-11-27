@@ -6,6 +6,7 @@ import 'package:lets_crew/home.dart';
 import 'package:lets_crew/model/club_model.dart';
 import 'club_add.dart';
 import 'login.dart';
+import 'main_page.dart';
 
 class ScreenArguments {
   final ClubModel club;
@@ -24,13 +25,12 @@ class MyApp extends StatelessWidget {
           initialRoute: '/login',
           routes: {
             '/login': (BuildContext context) => LoginPage(),
-            '/': (BuildContext context) => HomePage(),
+            '/': (BuildContext context) => MainPage(),
             '/addClub': (BuildContext context) => ClubAddPage(),
           },
           onGenerateRoute: (settings) {
             if (settings.name == '/club_detail') {
-              final ScreenArguments args =
-                  settings.arguments as ScreenArguments;
+              final ScreenArguments args = settings.arguments as ScreenArguments;
               return MaterialPageRoute(
                 builder: (context) => ClubDetailPage(club: args.club),
               );
