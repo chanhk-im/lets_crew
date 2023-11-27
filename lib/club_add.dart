@@ -47,10 +47,8 @@ class _ClubAddPageState extends State<ClubAddPage> {
       forwhoController.clear();
       activityController.clear();
 
-      // Display success message or perform navigation, etc.
       print('Club data uploaded successfully!');
     } catch (e) {
-      // Handle upload error
       print('Error uploading club data: $e');
     }
   }

@@ -169,6 +169,32 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(height: 10),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/recruiting_form');
+                        },
+                        icon: Icon(
+                          Icons.calendar_today_outlined,
+                          size: 20.0,
+                          color: colorScheme.onPrimary,
+                        ),
+                        label: Text(
+                          '리크루팅 추가',
+                          style: TextStyle(
+                              color: colorScheme.onPrimary, fontSize: 12),
+                        ),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.transparent),
+                          elevation: MaterialStateProperty.all(0),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0),
+                              side: BorderSide.none,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
