@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:lets_crew/app_state.dart';
+import 'package:provider/provider.dart';
 import 'app.dart';
 import 'firebase_options.dart';
 
@@ -9,5 +11,5 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(create: (context) => AppState(), builder: (context, child) => MyApp()));
 }
