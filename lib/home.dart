@@ -173,24 +173,22 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              body: Flexible(
-                child: FutureBuilder<List<Widget>>(
-                  future: _buildGridCards(context),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    } else {
-                      return GridView.count(
-                        crossAxisCount: 2,
-                        padding: const EdgeInsets.all(16.0),
-                        childAspectRatio: 8.0 / 9.0,
-                        children: snapshot.data!,
-                      );
-                    }
-                  },
-                ),
+              body: FutureBuilder<List<Widget>>(
+                future: _buildGridCards(context),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else {
+                    return GridView.count(
+                      crossAxisCount: 2,
+                      padding: const EdgeInsets.all(16.0),
+                      childAspectRatio: 8.0 / 9.0,
+                      children: snapshot.data!,
+                    );
+                  }
+                },
               ),
             );
           }
