@@ -22,6 +22,7 @@ class _RecruitingFormPageState extends State<RecruitingFormPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Recruiting Form'),
+        backgroundColor: Colors.transparent,
       ),
       body: SingleChildScrollView(
         child: Padding(
