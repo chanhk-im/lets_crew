@@ -100,6 +100,7 @@ class _RecruitingFormPageState extends State<RecruitingFormPage> {
                       ),
                     )
                   : SizedBox(),
+              Divider(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -247,7 +248,7 @@ class _TextFormWidgetState extends State<TextFormWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 15.0),
       child: TextFormField(
         controller: _textController,
         decoration: InputDecoration(
