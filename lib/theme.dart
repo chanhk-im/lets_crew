@@ -70,6 +70,7 @@ class LetsCrewTheme {
     primary: Color(0xFFFFFFFF),
     onPrimary: Colors.black,
     secondary: Color(0xFFFCCF5D), //Color(0xff3fa9f5) - 기존 color
+    tertiary: Color.fromARGB(255, 255, 231, 143),
     onSecondary: Color(0xFFFFFFFF),
     error: Color(0xffb00020),
     onError: Colors.white,

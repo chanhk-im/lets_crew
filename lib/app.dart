@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lets_crew/club_detail.dart';
 import 'package:lets_crew/home.dart';
 import 'package:lets_crew/model/club_model.dart';
+import 'package:lets_crew/recruiting_form.dart';
 import 'club_add.dart';
 import 'login.dart';
 import 'main_page.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
             '/login': (BuildContext context) => LoginPage(),
             '/': (BuildContext context) => MainPage(),
             '/addClub': (BuildContext context) => ClubAddPage(),
+            '/recruiting_form': (BuildContext context) => RecruitingFormPage(),
           },
           onGenerateRoute: (settings) {
             if (settings.name == '/club_detail') {
