@@ -24,45 +24,9 @@ class LetsCrewTheme {
       colorScheme: colorScheme,
       // fontFamily: '',
       textTheme: Platform.isIOS ? textThemeIOS : textThemeDefault,
-      // textTheme: _textTheme.apply(
-      //     displayColor: Color(0xff343434), fontFamily: GoogleFonts
-      //     .roboto()
-      //     .fontFamily),
-      // Matches manifest.json colors and background color.
       primaryColor: colorScheme.primary,
-      // appBarTheme: AppBarTheme(
-      //   textTheme: _textTheme.apply(bodyColor: colorScheme.onPrimary),
-      //   color: colorScheme.background,
-      //   elevation: 0,
-      //   iconTheme: IconThemeData(color: colorScheme.primary),
-      //   brightness: colorScheme.brightness,
-      // ),
       backgroundColor: Colors.white,
-      // inputDecorationTheme: InputDecorationTheme().copyWith(
-      //     border: OutlineInputBorder(
-      //       borderRadius: BorderRadius.circular(20.0),
-      //       borderSide: BorderSide(
-      //         color: Colors.white,
-      //       ),
-      //     )
-      // ),
-      // iconTheme: IconThemeData(color: colorScheme.onPrimary,),
-      // canvasColor: colorScheme.background,
-      // scaffoldBackgroundColor: colorScheme.background,
-      // highlightColor: Colors.transparent,
-      // accentColor: colorScheme.primary,
-      // focusColor: focusColor,
-      // buttonTheme: ButtonThemeData(
-      //   disabledColor: Color(0x33000000),
-      // ),
-      // disabledColor: Colors.white,
       dividerColor: colorScheme.tertiary,
-      // dividerTheme: const DividerThemeData(
-      //   thickness: 0.3,
-      // ),
-      // floatingActionButtonTheme: FloatingActionButtonThemeData(
-      //     backgroundColor: colorScheme.primary
-      // ),
     );
   }
 

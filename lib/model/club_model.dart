@@ -8,7 +8,7 @@ class ClubModel {
   final String aboutClub;
   final String compulsory;
   final String forwho;
-  final String activity;
+  final List<String> activity;
   final List<String> likes;
 
   ClubModel({
@@ -32,7 +32,7 @@ class ClubModel {
       aboutClub: data['aboutClub'],
       compulsory: data['compulsory'],
       forwho: data['forwho'],
-      activity: data['activity'],
+      activity: List<String>.from(data['activity']),
       likes: List<String>.from(data['likes']),
     );
   }

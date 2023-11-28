@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lets_crew/club_detail.dart';
 import 'package:lets_crew/home.dart';
 import 'package:lets_crew/model/club_model.dart';
+import 'package:lets_crew/theme.dart';
 import 'club_add.dart';
 import 'login.dart';
 import 'main_page.dart';
@@ -22,6 +23,12 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           title: 'Let\'s crew',
+          theme: ThemeData(
+              appBarTheme: AppBarTheme(
+                  backgroundColor: Colors.white,
+                  elevation: 0,
+                  titleTextStyle: TextStyle(color: Colors.black),
+                  iconTheme: IconThemeData(color: Colors.black))),
           initialRoute: '/login',
           routes: {
             '/login': (BuildContext context) => LoginPage(),
