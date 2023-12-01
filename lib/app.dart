@@ -36,13 +36,20 @@ class MyApp extends StatelessWidget {
             '/login': (BuildContext context) => LoginPage(),
             '/': (BuildContext context) => MainPage(),
             '/addClub': (BuildContext context) => ClubAddPage(),
-            '/recruiting_form': (BuildContext context) => RecruitingFormPage(),
           },
           onGenerateRoute: (settings) {
             if (settings.name == '/club_detail') {
-              final ScreenArguments args = settings.arguments as ScreenArguments;
+              final ScreenArguments args =
+                  settings.arguments as ScreenArguments;
               return MaterialPageRoute(
                 builder: (context) => ClubDetailPage(club: args.club),
+              );
+            }
+            if (settings.name == '/add_Recruiting_form') {
+              final ScreenArguments args =
+                  settings.arguments as ScreenArguments;
+              return MaterialPageRoute(
+                builder: (context) => RecruitingFormPage(club: args.club),
               );
             }
             return null;
