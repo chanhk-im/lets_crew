@@ -40,7 +40,7 @@ class LetsCrewTheme {
     onError: Colors.white,
     background: Color(0xFFFFFFFF),
     onBackground: Color(0xFFF1F1F1),
-    surface: Color(0xFFFFFFFF),
+    surface: Color(0xFFFFE68F),
     onSurface: Colors.black,
     brightness: Brightness.light,
   );
@@ -52,7 +52,7 @@ class LetsCrewTheme {
     subtitle1: TextStyle(fontSize: smallFontSize(18), fontFamily: 'Medium'),
     subtitle2: TextStyle(fontSize: smallFontSize(14), fontFamily: 'SemiBold'),
     bodyText1: TextStyle(fontSize: smallFontSize(14), fontFamily: 'Regular'),
-    bodyText2: TextStyle(fontSize: smallFontSize(11), fontFamily: 'Regular'),
+    bodyText2: TextStyle(fontSize: smallFontSize(10), fontFamily: 'Regular'),
   );
   static TextTheme textThemeHeading = TextTheme(
     headline1: TextStyle(fontSize: smallFontSize(38), fontFamily: 'Montserrat'),
@@ -67,6 +67,6 @@ class LetsCrewTheme {
     subtitle1: TextStyle(fontSize: smallFontSize(20), fontFamily: 'Medium'),
     subtitle2: TextStyle(fontSize: smallFontSize(16), fontFamily: 'SemiBold'),
     bodyText1: TextStyle(fontSize: smallFontSize(16), fontFamily: 'Regular'),
-    bodyText2: TextStyle(fontSize: smallFontSize(13), fontFamily: 'Regular'),
+    bodyText2: TextStyle(fontSize: smallFontSize(12), fontFamily: 'Regular'),
   );
 }

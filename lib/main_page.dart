@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lets_crew/like.dart';
+import 'package:lets_crew/search.dart';
 
 import 'home.dart';
 
@@ -14,7 +15,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
 
-  final List<Widget> _widgetOptions = [HomePage(), LikePage(), HomePage(), HomePage(), HomePage()];
+  final List<Widget> _widgetOptions = [SearchPage(), LikePage(), HomePage(), HomePage(), HomePage()];
 
   void _onItemTapped(int index) {
     // 탭을 클릭했을떄 지정한 페이지로 이동
@@ -29,9 +30,9 @@ class _MainPageState extends State<MainPage> {
       body: SafeArea(child: _widgetOptions[_selectedIndex]),
       bottomNavigationBar: BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: "aaa"),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "aaa"),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "hhh"),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: "search"),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "like"),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
           BottomNavigationBarItem(icon: Icon(Icons.notifications_rounded), label: "aaa"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "aaa"),
         ],
