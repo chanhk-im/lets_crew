@@ -19,7 +19,7 @@ class _RecruitingFormPageState extends State<RecruitingFormPage> {
 
   _RecruitingFormPageState({required this.club});
   List<Widget> textForms = [];
-  int questionIndex = 1; // 질문의 index를 추적
+  int questionIndex = 1;
   DateTime? startDate;
   DateTime? endDate;
   final colorScheme = LetsCrewTheme.lightColorScheme;
@@ -164,7 +164,7 @@ class _RecruitingFormPageState extends State<RecruitingFormPage> {
               ElevatedButton(
                 onPressed: () {
                   // Firebase에 저장
-                  saveToFirebase();
+                  saveToFirebase(club.docId);
                 },
                 child: Text(
                   '저장하기',
@@ -182,9 +182,11 @@ class _RecruitingFormPageState extends State<RecruitingFormPage> {
     );
   }
 
-  Future<void> saveToFirebase() async {
+  Future<void> saveToFirebase(String clubDocId) async {
     CollectionReference recruitingForm =
         FirebaseFirestore.instance.collection('recruiting');
+    DocumentReference clubRef =
+        FirebaseFirestore.instance.collection('club').doc(clubDocId);
 
     DocumentReference clubRecruiting = recruitingForm.doc('CRA');
 
@@ -200,15 +202,16 @@ class _RecruitingFormPageState extends State<RecruitingFormPage> {
         };
       }
     }
-
-    await clubRecruiting.set({
+    String recruitingId = DateTime.now().microsecondsSinceEpoch.toString();
+    await clubRef.collection('recruiting_questions').doc(recruitingId).set({
+      'clubName': club.name,
       'questions': questionsMap,
-      'startDate': startDate != null
-          ? DateFormat('yyyy-MM-dd').format(startDate!)
-          : null,
-      'endDate':
-          endDate != null ? DateFormat('yyyy-MM-dd').format(endDate!) : null,
-    });
+      'startDate': startDate,
+      'endDate': endDate,
+      'timestamp': FieldValue.serverTimestamp(),
+    }).then((e) => {
+          Navigator.pop(context),
+        });
 
     print('데이터가 Firebase에 저장되었습니다.');
   }

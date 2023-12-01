@@ -5,6 +5,8 @@ import 'package:lets_crew/app_state.dart';
 import 'package:lets_crew/model/club_model.dart';
 import 'package:provider/provider.dart';
 
+import 'theme.dart';
+
 class ClubDetailPage extends StatefulWidget {
   final ClubModel club;
 
@@ -16,7 +18,7 @@ class ClubDetailPage extends StatefulWidget {
 
 class _ClubDetailPageState extends State<ClubDetailPage> {
   ClubModel club;
-
+  final colorScheme = LetsCrewTheme.lightColorScheme;
   _ClubDetailPageState({required this.club});
 
   @override
@@ -24,12 +26,33 @@ class _ClubDetailPageState extends State<ClubDetailPage> {
     String titleName = club.name;
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          ScreenArguments args = ScreenArguments(club: club);
-          Navigator.pushNamed(context, '/add_Recruiting_form', arguments: args);
-        },
-        child: Icon(Icons.add),
+      floatingActionButton: Stack(
+        children: <Widget>[
+          Align(
+            alignment: Alignment.bottomRight,
+            child: FloatingActionButton(
+                onPressed: () {
+                  ScreenArguments args = ScreenArguments(club: club);
+                  Navigator.pushNamed(context, '/add_Recruiting_form',
+                      arguments: args);
+                },
+                backgroundColor: colorScheme.secondary,
+                child: Icon(Icons.add_chart)),
+          ),
+          Align(
+            alignment: Alignment(
+                Alignment.bottomRight.x, Alignment.bottomRight.y - 0.2),
+            child: FloatingActionButton(
+              onPressed: () {
+                ScreenArguments args = ScreenArguments(club: club);
+                Navigator.pushNamed(context, '/club_recruiting_form',
+                    arguments: args);
+              },
+              backgroundColor: colorScheme.secondary,
+              child: Icon(Icons.perm_contact_cal_outlined),
+            ),
+          )
+        ],
       ),
       appBar: AppBar(
         leading: IconButton(
