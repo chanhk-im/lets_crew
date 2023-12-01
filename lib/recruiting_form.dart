@@ -3,14 +3,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
+import 'model/club_model.dart';
 import 'theme.dart';
 
 class RecruitingFormPage extends StatefulWidget {
+  final ClubModel club;
+  RecruitingFormPage({required this.club});
   @override
-  _RecruitingFormPageState createState() => _RecruitingFormPageState();
+  _RecruitingFormPageState createState() =>
+      _RecruitingFormPageState(club: club);
 }
 
 class _RecruitingFormPageState extends State<RecruitingFormPage> {
+  ClubModel club;
+
+  _RecruitingFormPageState({required this.club});
   List<Widget> textForms = [];
   int questionIndex = 1; // 질문의 index를 추적
   DateTime? startDate;

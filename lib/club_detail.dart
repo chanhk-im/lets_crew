@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lets_crew/app.dart';
 import 'package:lets_crew/app_state.dart';
 import 'package:lets_crew/model/club_model.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,13 @@ class _ClubDetailPageState extends State<ClubDetailPage> {
     String titleName = club.name;
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ScreenArguments args = ScreenArguments(club: club);
+          Navigator.pushNamed(context, '/add_Recruiting_form', arguments: args);
+        },
+        child: Icon(Icons.add),
+      ),
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(
@@ -38,7 +46,9 @@ class _ClubDetailPageState extends State<ClubDetailPage> {
           Consumer<AppState>(builder: (context, appState, _) {
             return IconButton(
               icon: Icon(
-                (club.likes.contains(FirebaseAuth.instance.currentUser!.uid) ? Icons.favorite : Icons.favorite_border),
+                (club.likes.contains(FirebaseAuth.instance.currentUser!.uid)
+                    ? Icons.favorite
+                    : Icons.favorite_border),
                 semanticLabel: 'like',
               ),
               onPressed: () async {
