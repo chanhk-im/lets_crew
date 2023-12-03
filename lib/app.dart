@@ -8,6 +8,7 @@ import 'package:lets_crew/theme.dart';
 import 'package:lets_crew/recruiting_form.dart';
 
 import 'club_add.dart';
+import 'club_recruiting.dart';
 import 'login.dart';
 import 'main_page.dart';
 
@@ -50,6 +51,13 @@ class MyApp extends StatelessWidget {
                   settings.arguments as ScreenArguments;
               return MaterialPageRoute(
                 builder: (context) => RecruitingFormPage(club: args.club),
+              );
+            }
+            if (settings.name == '/club_recruiting_form') {
+              final ScreenArguments args =
+                  settings.arguments as ScreenArguments;
+              return MaterialPageRoute(
+                builder: (context) => ClubRecruitingPage(club: args.club),
               );
             }
             return null;
