@@ -5,8 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:lets_crew/firebase_options.dart';
-import 'package:lets_crew/model/club_model.dart';
+import 'firebase_options.dart';
+import 'model/club_model.dart';
+import 'model/recruiting_model.dart';
 
 class AppState extends ChangeNotifier {
   AppState() {
@@ -22,6 +23,24 @@ class AppState extends ChangeNotifier {
   StreamSubscription<QuerySnapshot>? _clubSubscription;
   List<ClubModel> _clubs = [];
   List<ClubModel> get clubs => _clubs;
+
+  List<RecruitingQuestions> _recruitings = [];
+  List<RecruitingQuestions> get recruitings => _recruitings;
+
+  List<String> _answers = [];
+  List<String> get answers => _answers;
+
+  initAnswers(var length) {
+    for (var i = 0; i < length - _answers.length; i++) {
+      _answers.add("");
+    }
+  }
+
+  addAnswers(String s, int index) {
+    _answers[index] = s;
+    print(_answers);
+    notifyListeners();
+  }
 
   Future<void> init() async {
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -55,6 +74,55 @@ class AppState extends ChangeNotifier {
     return await FirebaseFirestore.instance.collection('club').doc(club.docId).update(<String, dynamic>{
       'likes': club.likes,
     });
+  }
+
+  Future<void> fetchLatestRecruitingData(ClubModel club) async {
+    DocumentReference clubRef = FirebaseFirestore.instance.collection('club').doc(club.docId);
+    CollectionReference recruitingForm = clubRef.collection('recruiting_questions');
+
+    QuerySnapshot querySnapshot = await recruitingForm
+        .orderBy('timestamp', descending: true)
+        .limit(1)
+        // Remove the limit to fetch all documents
+        .get();
+
+    _recruitings = [];
+    if (querySnapshot.docs.isNotEmpty) {
+      // Access all documents in the result
+
+      for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
+        RecruitingQuestions data = RecruitingQuestions.fromSnapshot(documentSnapshot);
+        _recruitings.add(data);
+      }
+      initAnswers(_recruitings[0].questions.length);
+    }
+    notifyListeners();
+  }
+
+  Future<void> fetchLatestRecruitingDataWithoutUpdate(ClubModel club) async {
+    DocumentReference clubRef = FirebaseFirestore.instance.collection('club').doc(club.docId);
+    CollectionReference recruitingForm = clubRef.collection('recruiting_questions');
+
+    QuerySnapshot querySnapshot = await recruitingForm
+        .orderBy('timestamp', descending: true)
+        .limit(1)
+        // Remove the limit to fetch all documents
+        .get();
+
+    _recruitings = [];
+    if (querySnapshot.docs.isNotEmpty) {
+      // Access all documents in the result
+
+      for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
+        RecruitingQuestions data = RecruitingQuestions.fromSnapshot(documentSnapshot);
+        _recruitings.add(data);
+      }
+      initAnswers(_recruitings[0].questions.length);
+    }
+  }
+
+  void updateRecruitingAnswer(int index) {
+    _recruitings[0].submissions[index].answers = _answers;
   }
 
   Future<User?> handleGoogleSignIn() async {

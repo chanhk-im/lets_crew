@@ -10,8 +10,7 @@ class RecruitingFormPage extends StatefulWidget {
   final ClubModel club;
   RecruitingFormPage({required this.club});
   @override
-  _RecruitingFormPageState createState() =>
-      _RecruitingFormPageState(club: club);
+  _RecruitingFormPageState createState() => _RecruitingFormPageState(club: club);
 }
 
 class _RecruitingFormPageState extends State<RecruitingFormPage> {
@@ -63,8 +62,7 @@ class _RecruitingFormPageState extends State<RecruitingFormPage> {
                       style: TextStyle(fontSize: 12, color: Colors.black),
                     ),
                     style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(colorScheme.tertiary),
+                      backgroundColor: MaterialStateProperty.all(colorScheme.tertiary),
                     ),
                   ),
                   SizedBox(
@@ -90,8 +88,7 @@ class _RecruitingFormPageState extends State<RecruitingFormPage> {
                       style: TextStyle(fontSize: 12, color: Colors.black),
                     ),
                     style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(colorScheme.tertiary),
+                      backgroundColor: MaterialStateProperty.all(colorScheme.tertiary),
                     ),
                   ),
                 ],
@@ -128,8 +125,7 @@ class _RecruitingFormPageState extends State<RecruitingFormPage> {
                       style: TextStyle(fontSize: 12, color: Colors.black),
                     ),
                     style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(colorScheme.tertiary),
+                      backgroundColor: MaterialStateProperty.all(colorScheme.tertiary),
                     ),
                   ),
                   SizedBox(
@@ -151,8 +147,7 @@ class _RecruitingFormPageState extends State<RecruitingFormPage> {
                       style: TextStyle(fontSize: 12, color: Colors.black),
                     ),
                     style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(colorScheme.tertiary),
+                      backgroundColor: MaterialStateProperty.all(colorScheme.tertiary),
                     ),
                   ),
                 ],
@@ -171,8 +166,7 @@ class _RecruitingFormPageState extends State<RecruitingFormPage> {
                   style: TextStyle(fontSize: 12, color: Colors.black),
                 ),
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(colorScheme.tertiary),
+                  backgroundColor: MaterialStateProperty.all(colorScheme.tertiary),
                 ),
               ),
             ],
@@ -183,32 +177,31 @@ class _RecruitingFormPageState extends State<RecruitingFormPage> {
   }
 
   Future<void> saveToFirebase(String clubDocId) async {
-    CollectionReference recruitingForm =
-        FirebaseFirestore.instance.collection('recruiting');
-    DocumentReference clubRef =
-        FirebaseFirestore.instance.collection('club').doc(clubDocId);
+    CollectionReference recruitingForm = FirebaseFirestore.instance.collection('recruiting');
+    DocumentReference clubRef = FirebaseFirestore.instance.collection('club').doc(clubDocId);
 
     DocumentReference clubRecruiting = recruitingForm.doc('CRA');
 
-    Map<String, dynamic> questionsMap = {};
+    List<Map<String, dynamic>> questionsList = [];
 
     for (Widget formWidget in textForms) {
       if (formWidget is TextFormWidget) {
         int questionIndex = formWidget.questionIndex;
         // Add the question to the map
-        questionsMap[questionIndex.toString()] = {
+        questionsList.add({
           'question': (formWidget as TextFormWidget).getResponse(),
           'lengthLong': formWidget.keyType,
-        };
+        });
       }
     }
     String recruitingId = DateTime.now().microsecondsSinceEpoch.toString();
     await clubRef.collection('recruiting_questions').doc(recruitingId).set({
       'clubName': club.name,
-      'questions': questionsMap,
+      'questions': questionsList,
       'startDate': startDate,
       'endDate': endDate,
       'timestamp': FieldValue.serverTimestamp(),
+      'submissions': [],
     }).then((e) => {
           Navigator.pop(context),
         });
@@ -237,7 +230,7 @@ class TextFormWidget extends StatefulWidget {
     this.response = response;
   }
 
-  getResponse() {
+  String getResponse() {
     return response;
   }
 }
