@@ -31,22 +31,21 @@ class _ClubDetailPageState extends State<ClubDetailPage> {
           Align(
             alignment: Alignment.bottomRight,
             child: FloatingActionButton(
+                heroTag: "add",
                 onPressed: () {
                   ScreenArguments args = ScreenArguments(club: club);
-                  Navigator.pushNamed(context, '/add_Recruiting_form',
-                      arguments: args);
+                  Navigator.pushNamed(context, '/add_Recruiting_form', arguments: args);
                 },
                 backgroundColor: colorScheme.secondary,
                 child: Icon(Icons.add_chart)),
           ),
           Align(
-            alignment: Alignment(
-                Alignment.bottomRight.x, Alignment.bottomRight.y - 0.2),
+            alignment: Alignment(Alignment.bottomRight.x, Alignment.bottomRight.y - 0.2),
             child: FloatingActionButton(
+              heroTag: "show",
               onPressed: () {
                 ScreenArguments args = ScreenArguments(club: club);
-                Navigator.pushNamed(context, '/club_recruiting_form',
-                    arguments: args);
+                Navigator.pushNamed(context, '/club_recruiting_form', arguments: args);
               },
               backgroundColor: colorScheme.secondary,
               child: Icon(Icons.perm_contact_cal_outlined),
@@ -69,9 +68,7 @@ class _ClubDetailPageState extends State<ClubDetailPage> {
           Consumer<AppState>(builder: (context, appState, _) {
             return IconButton(
               icon: Icon(
-                (club.likes.contains(FirebaseAuth.instance.currentUser!.uid)
-                    ? Icons.favorite
-                    : Icons.favorite_border),
+                (club.likes.contains(FirebaseAuth.instance.currentUser!.uid) ? Icons.favorite : Icons.favorite_border),
                 semanticLabel: 'like',
               ),
               onPressed: () async {
