@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lets_crew/app.dart';
 import 'package:provider/provider.dart';
 
 import 'app_state.dart';
@@ -107,7 +108,12 @@ class _SearchPageState extends State<SearchPage> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: EdgeInsets.fromLTRB(40.w, 12.h, 40.w, 12.h),
-                    child: Container(child: Text(searchResult[index].name, style: textScheme.bodyText2)),
+                    child: GestureDetector(
+                        onTap: () {
+                          ScreenArguments args = ScreenArguments(club: searchResult[index]);
+                          Navigator.pushNamed(context, '/club_detail', arguments: args);
+                        },
+                        child: Container(child: Text(searchResult[index].name, style: textScheme.bodyText2))),
                   );
                 },
                 itemCount: searchResult.length,
