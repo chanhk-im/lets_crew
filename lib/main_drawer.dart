@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lets_crew/app_state.dart';
+import 'package:provider/provider.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({
@@ -20,28 +22,32 @@ class MainDrawer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 120),
-            ElevatedButton.icon(
-              onPressed: () {},
-              icon: Icon(
-                Icons.account_circle_outlined,
-                size: 20.0,
-                color: colorScheme.onPrimary,
-              ),
-              label: Text(
-                isLoggedIn,
-                style: TextStyle(color: colorScheme.onPrimary, fontSize: 12),
-              ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                elevation: MaterialStateProperty.all(0),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(0),
-                    side: BorderSide.none,
+            Consumer<AppState>(builder: (context, appState, _) {
+              return ElevatedButton.icon(
+                onPressed: () {
+                  appState.setSelectedIndex(4);
+                },
+                icon: Icon(
+                  Icons.account_circle_outlined,
+                  size: 20.0,
+                  color: colorScheme.onPrimary,
+                ),
+                label: Text(
+                  isLoggedIn,
+                  style: TextStyle(color: colorScheme.onPrimary, fontSize: 12),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                  elevation: MaterialStateProperty.all(0),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0),
+                      side: BorderSide.none,
+                    ),
                   ),
                 ),
-              ),
-            ),
+              );
+            }),
             SizedBox(height: 20),
             ElevatedButton.icon(
               onPressed: () {},

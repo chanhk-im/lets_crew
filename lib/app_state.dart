@@ -20,6 +20,14 @@ class AppState extends ChangeNotifier {
   bool _loggedIn = false;
   bool get loggedIn => _loggedIn;
 
+  int _selectedIndex = 0;
+  int get selectedIndex => _selectedIndex;
+
+  setSelectedIndex(int index) {
+    _selectedIndex = index;
+    notifyListeners();
+  }
+
   StreamSubscription<QuerySnapshot>? _clubSubscription;
   List<ClubModel> _clubs = [];
   List<ClubModel> get clubs => _clubs;
