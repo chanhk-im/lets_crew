@@ -28,12 +28,15 @@ class _ProfilePageState extends State<ProfilePage> {
         title: Text('PROFILE'),
       ),
       drawer: FutureBuilder<UserModel?>(
-          future: _userRepository.readUser(FirebaseAuth.instance.currentUser!.uid),
+          future: _userRepository
+              .readUser(FirebaseAuth.instance.currentUser != null ? FirebaseAuth.instance.currentUser!.uid : null),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return CircularProgressIndicator();
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
+            } else if (snapshot.data == null) {
+              return Text("로그인을 해 주시기 바랍니다.");
             } else {
               UserModel? userData = snapshot.data;
               User? user = FirebaseAuth.instance.currentUser;
@@ -66,7 +69,8 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(
                 width: 20.w,
               ),
-              Column(
+              (FirebaseAuth.instance.currentUser != null)
+              ?Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
@@ -85,6 +89,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ],
               )
+              : Text("비로그인"),
             ],
           ),
           SizedBox(
@@ -200,7 +205,12 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(
                 height: 12.h,
               ),
-              Text("로그아웃"),
+              GestureDetector(
+                  onTap: () async {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.pushNamed(context, '/login');
+                  },
+                  child: Text("로그아웃")),
               SizedBox(
                 height: 8.h,
               ),

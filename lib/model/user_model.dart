@@ -26,6 +26,7 @@ class UserModel {
 class UserRepository {
   final db = FirebaseFirestore.instance;
   Future<UserModel?> readUser(uid) async {
+    if (uid == null) return null;
     try {
       final snapshot = await db.collection('user').doc(uid).get();
 
