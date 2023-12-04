@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
             '/login': (BuildContext context) => LoginPage(),
             '/': (BuildContext context) => MainPage(),
             '/addClub': (BuildContext context) => ClubAddPage(),
+            '/allClub': (BuildContext context) => HomePage(),
           },
           onGenerateRoute: (settings) {
             if (settings.name == '/club_detail') {

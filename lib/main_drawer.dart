@@ -37,7 +37,8 @@ class MainDrawer extends StatelessWidget {
                   style: TextStyle(color: colorScheme.onPrimary, fontSize: 12),
                 ),
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.transparent),
                   elevation: MaterialStateProperty.all(0),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
@@ -50,7 +51,9 @@ class MainDrawer extends StatelessWidget {
             }),
             SizedBox(height: 20),
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/allClub');
+              },
               icon: Icon(
                 Icons.calendar_today_outlined,
                 size: 20.0,

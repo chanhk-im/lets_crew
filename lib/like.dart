@@ -15,7 +15,8 @@ class LikePage extends StatefulWidget {
 }
 
 class _LikePageState extends State<LikePage> {
-  Widget _buildGridCard(BuildContext context, List<ClubModel> likes, int index) {
+  Widget _buildGridCard(
+      BuildContext context, List<ClubModel> likes, int index) {
     final ThemeData theme = Theme.of(context);
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -32,7 +33,8 @@ class _LikePageState extends State<LikePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      likes[index].name, // Assuming ClubModel has a name property
+                      likes[index]
+                          .name, // Assuming ClubModel has a name property
                       style: TextStyle(fontSize: 17),
                       maxLines: 1,
                     ),
@@ -80,7 +82,8 @@ class _LikePageState extends State<LikePage> {
       body: Consumer<AppState>(
         builder: (context, appState, _) {
           List<ClubModel> likes = appState.clubs
-              .where((element) => element.likes.contains(FirebaseAuth.instance.currentUser!.uid))
+              .where((element) => element.likes
+                  .contains(FirebaseAuth.instance.currentUser!.uid))
               .toList();
           return ListView.builder(
             itemBuilder: (context, index) {
