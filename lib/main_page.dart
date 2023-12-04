@@ -6,7 +6,7 @@ import 'package:lets_crew/profile.dart';
 import 'package:lets_crew/search.dart';
 import 'package:provider/provider.dart';
 
-import 'home.dart';
+import 'all_club.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({super.key});
@@ -19,7 +19,7 @@ class _MainPageState extends State<MainPage> {
   final List<Widget> _widgetOptions = [
     SearchPage(),
     LikePage(),
-    HomePage(),
+    ClubAllPage(),
     ProfilePage()
   ];
 

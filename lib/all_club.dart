@@ -9,16 +9,17 @@ import 'model/user_model.dart';
 import 'theme.dart';
 import 'main_drawer.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
-  _HomePageState createState() => _HomePageState();
+class ClubAllPage extends StatefulWidget {
+  ClubAllPage({Key? key}) : super(key: key);
+  _ClubAllPageState createState() => _ClubAllPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ClubAllPageState extends State<ClubAllPage> {
   final UserRepository _userRepository = UserRepository();
   final colorScheme = LetsCrewTheme.lightColorScheme;
   Future<List<Widget>> _buildGridCards(BuildContext context) async {
-    List<ClubModel> clubs = context.select<AppState, List<ClubModel>>((value) => value.clubs);
+    List<ClubModel> clubs =
+        context.select<AppState, List<ClubModel>>((value) => value.clubs);
 
     if (clubs.isEmpty) {
       return const <Widget>[];
@@ -60,8 +61,10 @@ class _HomePageState extends State<HomePage> {
                             // ),
                             TextButton(
                               onPressed: () {
-                                ScreenArguments args = ScreenArguments(club: club);
-                                Navigator.pushNamed(context, '/club_detail', arguments: args);
+                                ScreenArguments args =
+                                    ScreenArguments(club: club);
+                                Navigator.pushNamed(context, '/club_detail',
+                                    arguments: args);
                               },
                               child: Text("more"),
                             )
@@ -83,7 +86,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<UserModel?>(
-        future: _userRepository.readUser(FirebaseAuth.instance.currentUser!.uid),
+        future:
+            _userRepository.readUser(FirebaseAuth.instance.currentUser!.uid),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
@@ -110,7 +114,6 @@ class _HomePageState extends State<HomePage> {
                       ))
                 ],
               ),
-              drawer: MainDrawer(colorScheme: colorScheme, isLoggedIn: isLoggedIn),
               body: FutureBuilder<List<Widget>>(
                 future: _buildGridCards(context),
                 builder: (context, snapshot) {
