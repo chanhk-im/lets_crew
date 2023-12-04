@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lets_crew/club_detail.dart';
-import 'package:lets_crew/home.dart';
+import 'package:lets_crew/all_club.dart';
 import 'package:lets_crew/model/club_model.dart';
 import 'package:lets_crew/theme.dart';
 import 'package:lets_crew/recruiting_form.dart';
@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
             '/login': (BuildContext context) => LoginPage(),
             '/': (BuildContext context) => MainPage(),
             '/addClub': (BuildContext context) => ClubAddPage(),
+            '/allClub': (BuildContext context) => ClubAllPage(),
           },
           onGenerateRoute: (settings) {
             if (settings.name == '/club_detail') {
