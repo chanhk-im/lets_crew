@@ -11,8 +11,8 @@ class ClubAddPage extends StatefulWidget {
 }
 
 class _ClubAddPageState extends State<ClubAddPage> {
+  String categoryValue = '전전';
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController categoryController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController aboutClubController = TextEditingController();
   final TextEditingController compulsoryController = TextEditingController();
@@ -20,6 +20,7 @@ class _ClubAddPageState extends State<ClubAddPage> {
   final TextEditingController activity1Controller = TextEditingController();
   final TextEditingController activity2Controller = TextEditingController();
   final TextEditingController activity3Controller = TextEditingController();
+  final categories = ['전전', '상사', '기계', '법', '교육', '언어', '국제', '공연'];
   File? imageFile;
   List<String> activities =
       List.filled(3, ''); // Initialize list with three empty strings
@@ -33,7 +34,7 @@ class _ClubAddPageState extends State<ClubAddPage> {
 
     try {
       final String name = nameController.text;
-      final String category = categoryController.text;
+      final String category = categoryValue; // Use categoryValue instead
       final String description = descriptionController.text;
       final String aboutClub = aboutClubController.text;
       final String compulsory = compulsoryController.text;
@@ -92,7 +93,6 @@ class _ClubAddPageState extends State<ClubAddPage> {
 
       // Clear text controllers and activities list after successful upload
       nameController.clear();
-      categoryController.clear();
       descriptionController.clear();
       aboutClubController.clear();
       compulsoryController.clear();
@@ -185,9 +185,36 @@ class _ClubAddPageState extends State<ClubAddPage> {
                     controller: nameController,
                     decoration: InputDecoration(labelText: 'Club Name'),
                   ),
-                  TextField(
-                    controller: categoryController,
-                    decoration: InputDecoration(labelText: 'Category'),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(0.0, 20.0, 20.0, 10.0),
+                        child: Text(
+                          'Category',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0.0, 7.0, 20.0, 0.0),
+                        child: DropdownButton<String>(
+                          value: categoryValue,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              categoryValue = newValue!;
+                            });
+                          },
+                          items: categories
+                              .map<DropdownMenuItem<String>>((String c) {
+                            return DropdownMenuItem<String>(
+                              value: c,
+                              child: Text(c),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ],
                   ),
                   TextField(
                     controller: descriptionController,
@@ -229,10 +256,11 @@ class _ClubAddPageState extends State<ClubAddPage> {
                     ),
                   ),
                   Center(
-                      child: Padding(
-                    padding: EdgeInsets.only(top: 300.h),
-                    child: CircularProgressIndicator(),
-                  )),
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 300.h),
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
                 ])
               : SizedBox()
         ],
