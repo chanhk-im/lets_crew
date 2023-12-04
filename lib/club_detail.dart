@@ -65,28 +65,31 @@ class _ClubDetailPageState extends State<ClubDetailPage> {
         ),
         title: Text(titleName),
         actions: <Widget>[
-          Consumer<AppState>(builder: (context, appState, _) {
-            return IconButton(
-              icon: Icon(
-                (club.likes.contains(FirebaseAuth.instance.currentUser!.uid) ? Icons.favorite : Icons.favorite_border),
-                semanticLabel: 'like',
-              ),
-              onPressed: () async {
-                await appState.likeProducts(club);
-                // if (club.likes.contains(FirebaseAuth.instance.currentUser!.uid)) {
-                //   print(club.likes);
-                //   setState(() {
-                //     club.likes.add(FirebaseAuth.instance.currentUser!.uid);
-                //   });
-                // } else {
-                //   print(club.likes);
-                //   setState(() {
-                //     club.likes.add(FirebaseAuth.instance.currentUser!.uid);
-                //   });
-                // }
-              },
-            );
-          }),
+          if (FirebaseAuth.instance.currentUser != null)
+            Consumer<AppState>(builder: (context, appState, _) {
+              return IconButton(
+                icon: Icon(
+                  (club.likes.contains(FirebaseAuth.instance.currentUser!.uid)
+                      ? Icons.favorite
+                      : Icons.favorite_border),
+                  semanticLabel: 'like',
+                ),
+                onPressed: () async {
+                  await appState.likeProducts(club);
+                  // if (club.likes.contains(FirebaseAuth.instance.currentUser!.uid)) {
+                  //   print(club.likes);
+                  //   setState(() {
+                  //     club.likes.add(FirebaseAuth.instance.currentUser!.uid);
+                  //   });
+                  // } else {
+                  //   print(club.likes);
+                  //   setState(() {
+                  //     club.likes.add(FirebaseAuth.instance.currentUser!.uid);
+                  //   });
+                  // }
+                },
+              );
+            }),
         ],
       ),
       body: Padding(
