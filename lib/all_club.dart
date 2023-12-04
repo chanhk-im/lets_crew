@@ -28,56 +28,52 @@ class _ClubAllPageState extends State<ClubAllPage> {
     final ThemeData theme = Theme.of(context);
 
     return clubs.map((club) {
-      return Card(
-        clipBehavior: Clip.antiAlias,
-        child: Stack(
-          alignment: Alignment.topRight,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                AspectRatio(
+      return GestureDetector(
+        onTap: () {
+          // Navigate to the club detail page when the card is tapped
+          ScreenArguments args = ScreenArguments(club: club);
+          Navigator.pushNamed(context, '/club_detail', arguments: args);
+        },
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          child: Stack(
+            alignment: Alignment.topRight,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  AspectRatio(
                     aspectRatio: 18 / 11,
                     child: Container(
                       width: 100,
-                    )),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          club.name, // Assuming ClubModel has a name property
-                          style: TextStyle(fontSize: 17),
-                          maxLines: 1,
-                        ),
-                        const SizedBox(height: 5.0),
-                        Row(
-                          children: [
-                            // Text(
-                            //   'Description: ${club.description}', // Assuming ClubModel has a description property
-                            //   style: TextStyle(fontSize: 13),
-                            // ),
-                            TextButton(
-                              onPressed: () {
-                                ScreenArguments args =
-                                    ScreenArguments(club: club);
-                                Navigator.pushNamed(context, '/club_detail',
-                                    arguments: args);
-                              },
-                              child: Text("more"),
-                            )
-                          ],
-                        )
-                      ],
+                      child: Image.network(
+                        club.imageUrl,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            // You can add additional elements based on your requirements
-          ],
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            club.name,
+                            style: LetsCrewTheme.textThemeHeading.headline2,
+                            maxLines: 1,
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 5.0),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // You can add additional elements based on your requirements
+            ],
+          ),
         ),
       );
     }).toList();

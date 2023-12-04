@@ -56,7 +56,7 @@ class LetsCrewTheme {
   );
   static TextTheme textThemeHeading = TextTheme(
     headline1: TextStyle(fontSize: smallFontSize(38), fontFamily: 'Montserrat'),
-    headline2: TextStyle(fontSize: smallFontSize(30), fontFamily: 'Bold'),
+    headline2: TextStyle(fontSize: smallFontSize(24), fontFamily: 'Montserrat'),
     bodyText1: TextStyle(fontSize: smallFontSize(18), fontFamily: 'Montserrat'),
   );
 
