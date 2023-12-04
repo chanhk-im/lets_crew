@@ -60,7 +60,7 @@ class _ClubDetailPageState extends State<ClubDetailPage> {
             semanticLabel: 'back',
           ),
           onPressed: () {
-            Navigator.pushNamed(context, '/');
+            Navigator.pop(context);
           },
         ),
         title: Text(titleName),
