@@ -61,6 +61,7 @@ class MyApp extends StatelessWidget {
                 builder: (context) => ClubRecruitingPage(club: args.club),
               );
             }
+
             return null;
           },
         );
