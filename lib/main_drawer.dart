@@ -25,7 +25,7 @@ class MainDrawer extends StatelessWidget {
             Consumer<AppState>(builder: (context, appState, _) {
               return ElevatedButton.icon(
                 onPressed: () {
-                  appState.setSelectedIndex(4);
+                  appState.setSelectedIndex(3);
                 },
                 icon: Icon(
                   Icons.account_circle_outlined,
