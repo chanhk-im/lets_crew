@@ -66,6 +66,7 @@ class MyApp extends StatelessWidget {
                 builder: (context) => ClubRecruitingPage(club: args.club),
               );
             }
+
             if (settings.name == '/submission_list') {
               final ClubScreenArguments args = settings.arguments as ClubScreenArguments;
               return MaterialPageRoute(
