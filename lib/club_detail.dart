@@ -26,33 +26,48 @@ class _ClubDetailPageState extends State<ClubDetailPage> {
     String titleName = club.name;
 
     return Scaffold(
-      floatingActionButton: Stack(
-        children: <Widget>[
-          Align(
-            alignment: Alignment.bottomRight,
-            child: FloatingActionButton(
-                heroTag: "add",
+      floatingActionButton: Consumer<AppState>(builder: (context, appState, _) {
+        print(appState.currentUser);
+        return Stack(
+          children: <Widget>[
+            if (appState.currentUser != null && appState.currentUser!.role)
+              Align(
+                alignment: Alignment(Alignment.bottomRight.x, Alignment.bottomRight.y - 0.4),
+                child: FloatingActionButton(
+                    heroTag: "admin",
+                    onPressed: () {
+                      ClubScreenArguments args = ClubScreenArguments(club: club);
+                      Navigator.pushNamed(context, '/submission_list', arguments: args);
+                    },
+                    backgroundColor: colorScheme.secondary,
+                    child: Icon(Icons.list)),
+              ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: FloatingActionButton(
+                  heroTag: "add",
+                  onPressed: () {
+                    ClubScreenArguments args = ClubScreenArguments(club: club);
+                    Navigator.pushNamed(context, '/add_Recruiting_form', arguments: args);
+                  },
+                  backgroundColor: colorScheme.secondary,
+                  child: Icon(Icons.add_chart)),
+            ),
+            Align(
+              alignment: Alignment(Alignment.bottomRight.x, Alignment.bottomRight.y - 0.2),
+              child: FloatingActionButton(
+                heroTag: "show",
                 onPressed: () {
-                  ScreenArguments args = ScreenArguments(club: club);
-                  Navigator.pushNamed(context, '/add_Recruiting_form', arguments: args);
+                  ClubScreenArguments args = ClubScreenArguments(club: club);
+                  Navigator.pushNamed(context, '/club_recruiting_form', arguments: args);
                 },
                 backgroundColor: colorScheme.secondary,
-                child: Icon(Icons.add_chart)),
-          ),
-          Align(
-            alignment: Alignment(Alignment.bottomRight.x, Alignment.bottomRight.y - 0.2),
-            child: FloatingActionButton(
-              heroTag: "show",
-              onPressed: () {
-                ScreenArguments args = ScreenArguments(club: club);
-                Navigator.pushNamed(context, '/club_recruiting_form', arguments: args);
-              },
-              backgroundColor: colorScheme.secondary,
-              child: Icon(Icons.perm_contact_cal_outlined),
-            ),
-          )
-        ],
-      ),
+                child: Icon(Icons.perm_contact_cal_outlined),
+              ),
+            )
+          ],
+        );
+      }),
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(

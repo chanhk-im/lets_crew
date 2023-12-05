@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:lets_crew/model/user_model.dart';
 import 'firebase_options.dart';
 import 'model/club_model.dart';
 import 'model/recruiting_model.dart';
@@ -38,6 +39,9 @@ class AppState extends ChangeNotifier {
   List<String> _answers = [];
   List<String> get answers => _answers;
 
+  UserModel? _currentUser;
+  UserModel? get currentUser => _currentUser;
+
   initAnswers(var length) {
     for (var i = 0; i < length - _answers.length; i++) {
       _answers.add("");
@@ -53,10 +57,11 @@ class AppState extends ChangeNotifier {
   Future<void> init() async {
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-    FirebaseAuth.instance.userChanges().listen((user) {
+    FirebaseAuth.instance.userChanges().listen((user) async {
       if (user != null) {
         _loggedIn = true;
-        print("logged!");
+        _currentUser = await UserRepository().readUser(FirebaseAuth.instance.currentUser!.uid);
+        print(_currentUser);
         _clubSubscription = FirebaseFirestore.instance.collection('club').snapshots().listen((event) {
           _clubs = [];
           for (final document in event.docs) {
@@ -66,6 +71,7 @@ class AppState extends ChangeNotifier {
         });
       } else {
         _loggedIn = false;
+        _currentUser = null;
         _clubs = [];
       }
       notifyListeners();
