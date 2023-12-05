@@ -110,7 +110,7 @@ class _SearchPageState extends State<SearchPage> {
                     padding: EdgeInsets.fromLTRB(40.w, 12.h, 40.w, 12.h),
                     child: GestureDetector(
                         onTap: () {
-                          ScreenArguments args = ScreenArguments(club: searchResult[index]);
+                          ClubScreenArguments args = ClubScreenArguments(club: searchResult[index]);
                           Navigator.pushNamed(context, '/club_detail', arguments: args);
                         },
                         child: Container(child: Text(searchResult[index].name, style: textScheme.bodyText2))),

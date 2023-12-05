@@ -9,12 +9,12 @@ import 'model/user_model.dart';
 import 'theme.dart';
 import 'main_drawer.dart';
 
-class ClubAllPage extends StatefulWidget {
-  ClubAllPage({Key? key}) : super(key: key);
-  _ClubAllPageState createState() => _ClubAllPageState();
+class HomePage extends StatefulWidget {
+  HomePage({Key? key}) : super(key: key);
+  _HomePageState createState() => _HomePageState();
 }
 
-class _ClubAllPageState extends State<ClubAllPage> {
+class _HomePageState extends State<HomePage> {
   final UserRepository _userRepository = UserRepository();
   final colorScheme = LetsCrewTheme.lightColorScheme;
   Future<List<Widget>> _buildGridCards(BuildContext context) async {
@@ -27,52 +27,54 @@ class _ClubAllPageState extends State<ClubAllPage> {
     final ThemeData theme = Theme.of(context);
 
     return clubs.map((club) {
-      return GestureDetector(
-        onTap: () {
-          // Navigate to the club detail page when the card is tapped
-          ClubScreenArguments args = ClubScreenArguments(club: club);
-          Navigator.pushNamed(context, '/club_detail', arguments: args);
-        },
-        child: Card(
-          clipBehavior: Clip.antiAlias,
-          child: Stack(
-            alignment: Alignment.topRight,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  AspectRatio(
+      return Card(
+        clipBehavior: Clip.antiAlias,
+        child: Stack(
+          alignment: Alignment.topRight,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                AspectRatio(
                     aspectRatio: 18 / 11,
                     child: Container(
                       width: 100,
-                      child: Image.network(
-                        club.imageUrl,
-                        fit: BoxFit.cover,
-                      ),
+                    )),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          club.name, // Assuming ClubModel has a name property
+                          style: TextStyle(fontSize: 17),
+                          maxLines: 1,
+                        ),
+                        const SizedBox(height: 5.0),
+                        Row(
+                          children: [
+                            // Text(
+                            //   'Description: ${club.description}', // Assuming ClubModel has a description property
+                            //   style: TextStyle(fontSize: 13),
+                            // ),
+                            TextButton(
+                              onPressed: () {
+                                ClubScreenArguments args = ClubScreenArguments(club: club);
+                                Navigator.pushNamed(context, '/club_detail', arguments: args);
+                              },
+                              child: Text("more"),
+                            )
+                          ],
+                        )
+                      ],
                     ),
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            club.name,
-                            style: LetsCrewTheme.textThemeHeading.headline2,
-                            maxLines: 1,
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 5.0),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              // You can add additional elements based on your requirements
-            ],
-          ),
+                ),
+              ],
+            ),
+            // You can add additional elements based on your requirements
+          ],
         ),
       );
     }).toList();
@@ -108,6 +110,7 @@ class _ClubAllPageState extends State<ClubAllPage> {
                       ))
                 ],
               ),
+              drawer: MainDrawer(colorScheme: colorScheme, isLoggedIn: isLoggedIn),
               body: FutureBuilder<List<Widget>>(
                 future: _buildGridCards(context),
                 builder: (context, snapshot) {

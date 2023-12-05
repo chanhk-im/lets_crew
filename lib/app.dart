@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lets_crew/club_detail.dart';
 import 'package:lets_crew/all_club.dart';
 import 'package:lets_crew/model/club_model.dart';
+import 'package:lets_crew/model/recruiting_model.dart';
+import 'package:lets_crew/submission_list.dart';
 import 'package:lets_crew/theme.dart';
 import 'package:lets_crew/recruiting_form.dart';
 
@@ -12,10 +14,16 @@ import 'club_recruiting.dart';
 import 'login.dart';
 import 'main_page.dart';
 
-class ScreenArguments {
+class ClubScreenArguments {
   final ClubModel club;
 
-  ScreenArguments({required this.club});
+  ClubScreenArguments({required this.club});
+}
+
+class RecruitingScreenArguments {
+  final RecruitingQuestions recruiting;
+
+  RecruitingScreenArguments({required this.recruiting});
 }
 
 class MyApp extends StatelessWidget {
@@ -41,27 +49,30 @@ class MyApp extends StatelessWidget {
           },
           onGenerateRoute: (settings) {
             if (settings.name == '/club_detail') {
-              final ScreenArguments args =
-                  settings.arguments as ScreenArguments;
+              final ClubScreenArguments args = settings.arguments as ClubScreenArguments;
               return MaterialPageRoute(
                 builder: (context) => ClubDetailPage(club: args.club),
               );
             }
             if (settings.name == '/add_Recruiting_form') {
-              final ScreenArguments args =
-                  settings.arguments as ScreenArguments;
+              final ClubScreenArguments args = settings.arguments as ClubScreenArguments;
               return MaterialPageRoute(
                 builder: (context) => RecruitingFormPage(club: args.club),
               );
             }
             if (settings.name == '/club_recruiting_form') {
-              final ScreenArguments args =
-                  settings.arguments as ScreenArguments;
+              final ClubScreenArguments args = settings.arguments as ClubScreenArguments;
               return MaterialPageRoute(
                 builder: (context) => ClubRecruitingPage(club: args.club),
               );
             }
 
+            if (settings.name == '/submission_list') {
+              final ClubScreenArguments args = settings.arguments as ClubScreenArguments;
+              return MaterialPageRoute(
+                builder: (context) => SubmissionListPage(club: args.club),
+              );
+            }
             return null;
           },
         );
