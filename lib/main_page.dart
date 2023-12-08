@@ -19,7 +19,6 @@ class _MainPageState extends State<MainPage> {
   final List<Widget> _widgetOptions = [
     SearchPage(),
     LikePage(),
-    ClubAllPage(),
     ProfilePage()
   ];
 
@@ -35,8 +34,6 @@ class _MainPageState extends State<MainPage> {
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
             BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "like"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.notifications_rounded), label: "aaa"),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: "aaa"),
           ],
           selectedIconTheme: IconThemeData(color: Colors.black), // 선택된 아이콘 스타일

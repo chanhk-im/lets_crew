@@ -51,7 +51,6 @@ class AppState extends ChangeNotifier {
 
   addAnswers(String s, int index) {
     _answers[index] = s;
-
     notifyListeners();
   }
 
@@ -62,12 +61,8 @@ class AppState extends ChangeNotifier {
     FirebaseAuth.instance.userChanges().listen((user) async {
       if (user != null) {
         _loggedIn = true;
-        _currentUser = await UserRepository()
-            .readUser(FirebaseAuth.instance.currentUser!.uid);
-        _clubSubscription = FirebaseFirestore.instance
-            .collection('club')
-            .snapshots()
-            .listen((event) {
+        _currentUser = await UserRepository().readUser(FirebaseAuth.instance.currentUser!.uid);
+        _clubSubscription = FirebaseFirestore.instance.collection('club').snapshots().listen((event) {
           _clubs = [];
           for (final document in event.docs) {
             _clubs.add(ClubModel.fromSnapshot(document));

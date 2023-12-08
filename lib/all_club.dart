@@ -17,29 +17,16 @@ class ClubAllPage extends StatefulWidget {
 class _ClubAllPageState extends State<ClubAllPage> {
   final UserRepository _userRepository = UserRepository();
   final colorScheme = LetsCrewTheme.lightColorScheme;
-  List<String> categories = [
-    '모두보기',
-    '전전',
-    '상사',
-    '기계',
-    '법',
-    '교육',
-    '언어',
-    '국제',
-    '공연'
-  ];
+  List<String> categories = ['모두보기', '전전', '상사', '기계', '법', '교육', '언어', '국제', '공연'];
   int _sortOrder = 0;
   Future<List<Widget>> _buildGridCards(BuildContext context) async {
-    List<ClubModel> clubs =
-        context.select<AppState, List<ClubModel>>((value) => value.clubs);
+    List<ClubModel> clubs = context.select<AppState, List<ClubModel>>((value) => value.clubs);
 
     if (clubs.isEmpty) {
       return const <Widget>[];
     }
     if (_sortOrder != 0) {
-      clubs = clubs
-          .where((club) => club.category == categories[_sortOrder])
-          .toList();
+      clubs = clubs.where((club) => club.category == categories[_sortOrder]).toList();
     }
 
     final ThemeData theme = Theme.of(context);
@@ -99,88 +86,74 @@ class _ClubAllPageState extends State<ClubAllPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<UserModel?>(
-        future:
-            _userRepository.readUser(FirebaseAuth.instance.currentUser!.uid),
+        future: _userRepository.readUser(FirebaseAuth.instance.currentUser!.uid),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            UserModel? userData = snapshot.data;
-            User? user = FirebaseAuth.instance.currentUser;
-            String isLoggedIn = "회원가입 후 이용하기";
-            if (userData?.name != null) {
-              isLoggedIn = "프로필 확인하기";
-            }
-
-            return Scaffold(
-                appBar: AppBar(
-                  leading: IconButton(
+          return Scaffold(
+              appBar: AppBar(
+                leading: Consumer<AppState>(builder: (context, appState, _) {
+                  return IconButton(
                       onPressed: () {
+                        appState.setSelectedIndex(0);
                         Navigator.pushNamed(context, '/');
                       },
                       icon: Icon(
                         Icons.arrow_back_ios,
-                      )),
-                  title: Text('Clubs'),
-                  actions: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/addClub');
+                      ));
+                }),
+                title: Text('Clubs'),
+                actions: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/addClub');
+                      },
+                      icon: Icon(
+                        Icons.add,
+                      ))
+                ],
+              ),
+              body: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 30.0),
+                    child: Row(children: [
+                      Text("카테고리: "),
+                      DropdownButton<String>(
+                        value: categories[_sortOrder],
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _sortOrder = categories.indexOf(newValue!);
+                          });
                         },
-                        icon: Icon(
-                          Icons.add,
-                        ))
-                  ],
-                ),
-                body: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 30.0),
-                      child: Row(children: [
-                        Text("카테고리: "),
-                        DropdownButton<String>(
-                          value: categories[_sortOrder],
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _sortOrder = categories.indexOf(newValue!);
-                            });
-                          },
-                          items: categories
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                      ]),
-                    ),
-                    Flexible(
-                      child: FutureBuilder<List<Widget>>(
-                        future: _buildGridCards(context),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Center(child: CircularProgressIndicator());
-                          } else if (snapshot.hasError) {
-                            return Center(
-                                child: Text('Error: ${snapshot.error}'));
-                          } else {
-                            return GridView.count(
-                              crossAxisCount: 2,
-                              padding: const EdgeInsets.all(16.0),
-                              childAspectRatio: 8.0 / 9.0,
-                              children: snapshot.data!,
-                            );
-                          }
-                        },
+                        items: categories.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
                       ),
+                    ]),
+                  ),
+                  Flexible(
+                    child: FutureBuilder<List<Widget>>(
+                      future: _buildGridCards(context),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          return Center(child: Text('Error: ${snapshot.error}'));
+                        } else {
+                          return GridView.count(
+                            crossAxisCount: 2,
+                            padding: const EdgeInsets.all(16.0),
+                            childAspectRatio: 8.0 / 9.0,
+                            children: snapshot.data!,
+                          );
+                        }
+                      },
                     ),
-                  ],
-                ));
-          }
+                  ),
+                ],
+              ));
         });
   }
 }

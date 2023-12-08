@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,8 @@ import 'package:lets_crew/app_state.dart';
 import 'package:lets_crew/model/club_model.dart';
 import 'package:provider/provider.dart';
 
+import 'theme.dart';
+
 class LikePage extends StatefulWidget {
   const LikePage({super.key});
 
@@ -15,51 +19,80 @@ class LikePage extends StatefulWidget {
 }
 
 class _LikePageState extends State<LikePage> {
-  Widget _buildGridCard(
-      BuildContext context, List<ClubModel> likes, int index) {
+  final colorScheme = LetsCrewTheme.lightColorScheme;
+  final textScheme = Platform.isIOS ? LetsCrewTheme.textThemeIOS : LetsCrewTheme.textThemeDefault;
+
+  Widget _buildGridCard(BuildContext context, List<ClubModel> likes, int index) {
     final ThemeData theme = Theme.of(context);
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: Stack(
-        alignment: Alignment.topRight,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(width: 100.w, height: 100.h),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      likes[index]
-                          .name, // Assuming ClubModel has a name property
-                      style: TextStyle(fontSize: 17),
-                      maxLines: 1,
-                    ),
-                    SizedBox(height: 5.0.h),
-                    Row(
-                      children: [
-                        // Text(
-                        //   'Description: ${club.description}', // Assuming ClubModel has a description property
-                        //   style: TextStyle(fontSize: 13),
-                        // ),
-                        TextButton(
-                          onPressed: () {
-                            context.read<AppState>().likeProducts(likes[index]);
-                          },
-                          child: Text("delete"),
-                        )
-                      ],
-                    )
-                  ],
-                ),
+    return GestureDetector(
+      onTap: () {
+        ClubScreenArguments args = ClubScreenArguments(club: likes[index]);
+        Navigator.pushNamed(context, '/club_detail', arguments: args);
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+        elevation: 0,
+        color: Color.fromARGB(255, 253, 234, 164),
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.fromLTRB(24.w, 16.h, 8.w, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.star),
+                          SizedBox(
+                            width: 10.w,
+                          ),
+                          Text(
+                            likes[index].name, // Assuming ClubModel has a name property
+                            style: textScheme.subtitle1,
+                            maxLines: 1,
+                          ),
+                        ],
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          context.read<AppState>().likeProducts(likes[index]);
+                        },
+                        icon: Icon(Icons.delete_outlined),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 5.0.h),
+                ],
               ),
-            ],
-          ),
-          // You can add additional elements based on your requirements
-        ],
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 23.w, bottom: 30.h, right: 20.w),
+                  child: SizedBox(
+                    width: 78,
+                    child: Image.network(
+                      likes[index].imageUrl,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                    width: 214.w,
+                    child: Text(
+                      likes[index].description,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    )),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -68,26 +101,28 @@ class _LikePageState extends State<LikePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HOME'),
-        actions: [
-          IconButton(
+        title: Text('LIKES'),
+        leading: Consumer<AppState>(builder: (context, appState, _) {
+          return IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/addClub');
+                appState.setSelectedIndex(0);
               },
               icon: Icon(
-                Icons.add,
-              ))
-        ],
+                Icons.arrow_back_ios,
+              ));
+        }),
       ),
       body: Consumer<AppState>(
         builder: (context, appState, _) {
           List<ClubModel> likes = appState.clubs
-              .where((element) => element.likes
-                  .contains(FirebaseAuth.instance.currentUser!.uid))
+              .where((element) => element.likes.contains(FirebaseAuth.instance.currentUser!.uid))
               .toList();
           return ListView.builder(
             itemBuilder: (context, index) {
-              return _buildGridCard(context, likes, index);
+              return Padding(
+                padding: EdgeInsets.only(top: 8.h, bottom: 8.h),
+                child: _buildGridCard(context, likes, index),
+              );
             },
             padding: const EdgeInsets.all(16.0),
             itemCount: likes.length,

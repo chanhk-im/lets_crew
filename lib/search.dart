@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ai_barcode_scanner/ai_barcode_scanner.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -120,9 +121,47 @@ class _SearchPageState extends State<SearchPage> {
                 padding: EdgeInsets.only(bottom: 20.h),
               ),
             ),
-            const Divider(
-              height: 1.0,
-              color: Colors.grey,
+            if (searchResult.isNotEmpty)
+              const Divider(
+                height: 1.0,
+                color: Colors.grey,
+              ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AiBarcodeScanner(
+                      validator: (value) {
+                        return value.startsWith('https://');
+                      },
+                      canPop: false,
+                      onScan: (String value) {
+                        debugPrint(value);
+                        // setState(() {
+                        //   barcode = value;
+                        // });
+                      },
+                      onDetect: (p0) {},
+                      onDispose: () {
+                        debugPrint("Barcode scanner disposed!");
+                      },
+                      controller: MobileScannerController(
+                        detectionSpeed: DetectionSpeed.noDuplicates,
+                      ),
+                    ),
+                  ),
+                );
+                AiBarcodeScanner(
+                  onScan: (String value) {
+                    debugPrint(value);
+                  },
+                  onDetect: (BarcodeCapture barcodeCapture) {
+                    debugPrint(barcodeCapture as String?);
+                  },
+                );
+              },
+              child: Text('ㅗㅗㅗ'),
             ),
           ],
         ));
