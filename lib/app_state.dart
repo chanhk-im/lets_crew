@@ -16,7 +16,8 @@ class AppState extends ChangeNotifier {
   }
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final CollectionReference _usersCollection = FirebaseFirestore.instance.collection('user');
+  final CollectionReference _usersCollection =
+      FirebaseFirestore.instance.collection('user');
 
   bool _loggedIn = false;
   bool get loggedIn => _loggedIn;
@@ -50,19 +51,23 @@ class AppState extends ChangeNotifier {
 
   addAnswers(String s, int index) {
     _answers[index] = s;
-    print(_answers);
+
     notifyListeners();
   }
 
   Future<void> init() async {
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
 
     FirebaseAuth.instance.userChanges().listen((user) async {
       if (user != null) {
         _loggedIn = true;
-        _currentUser = await UserRepository().readUser(FirebaseAuth.instance.currentUser!.uid);
-        print(_currentUser);
-        _clubSubscription = FirebaseFirestore.instance.collection('club').snapshots().listen((event) {
+        _currentUser = await UserRepository()
+            .readUser(FirebaseAuth.instance.currentUser!.uid);
+        _clubSubscription = FirebaseFirestore.instance
+            .collection('club')
+            .snapshots()
+            .listen((event) {
           _clubs = [];
           for (final document in event.docs) {
             _clubs.add(ClubModel.fromSnapshot(document));
@@ -85,14 +90,19 @@ class AppState extends ChangeNotifier {
       club.likes.add(_auth.currentUser!.uid);
     }
     notifyListeners();
-    return await FirebaseFirestore.instance.collection('club').doc(club.docId).update(<String, dynamic>{
+    return await FirebaseFirestore.instance
+        .collection('club')
+        .doc(club.docId)
+        .update(<String, dynamic>{
       'likes': club.likes,
     });
   }
 
   Future<void> fetchLatestRecruitingData(ClubModel club) async {
-    DocumentReference clubRef = FirebaseFirestore.instance.collection('club').doc(club.docId);
-    CollectionReference recruitingForm = clubRef.collection('recruiting_questions');
+    DocumentReference clubRef =
+        FirebaseFirestore.instance.collection('club').doc(club.docId);
+    CollectionReference recruitingForm =
+        clubRef.collection('recruiting_questions');
 
     QuerySnapshot querySnapshot = await recruitingForm
         .orderBy('timestamp', descending: true)
@@ -105,7 +115,8 @@ class AppState extends ChangeNotifier {
       // Access all documents in the result
 
       for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
-        RecruitingQuestions data = RecruitingQuestions.fromSnapshot(documentSnapshot);
+        RecruitingQuestions data =
+            RecruitingQuestions.fromSnapshot(documentSnapshot);
         _recruitings.add(data);
       }
       initAnswers(_recruitings[0].questions.length);
@@ -114,21 +125,21 @@ class AppState extends ChangeNotifier {
   }
 
   Future<void> fetchLatestRecruitingDataWithoutUpdate(ClubModel club) async {
-    DocumentReference clubRef = FirebaseFirestore.instance.collection('club').doc(club.docId);
-    CollectionReference recruitingForm = clubRef.collection('recruiting_questions');
+    DocumentReference clubRef =
+        FirebaseFirestore.instance.collection('club').doc(club.docId);
+    CollectionReference recruitingForm =
+        clubRef.collection('recruiting_questions');
 
     QuerySnapshot querySnapshot = await recruitingForm
         .orderBy('timestamp', descending: true)
         .limit(1)
-        // Remove the limit to fetch all documents
         .get();
 
     _recruitings = [];
     if (querySnapshot.docs.isNotEmpty) {
-      // Access all documents in the result
-
       for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
-        RecruitingQuestions data = RecruitingQuestions.fromSnapshot(documentSnapshot);
+        RecruitingQuestions data =
+            RecruitingQuestions.fromSnapshot(documentSnapshot);
         _recruitings.add(data);
       }
       initAnswers(_recruitings[0].questions.length);
@@ -143,18 +154,21 @@ class AppState extends ChangeNotifier {
     try {
       // Google Sign-In
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
 
       // Firebase Authentication
-      final UserCredential userCredential = await _auth.signInWithCredential(credential);
+      final UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
       final User? user = userCredential.user;
 
       // Check if the user already exists in Firestore
-      final DocumentSnapshot userSnapshot = await _usersCollection.doc(user?.uid).get();
+      final DocumentSnapshot userSnapshot =
+          await _usersCollection.doc(user?.uid).get();
 
       if (!userSnapshot.exists) {
         // User does not exist in Firestore, add them
@@ -178,7 +192,8 @@ class AppState extends ChangeNotifier {
       final userCredential = await FirebaseAuth.instance.signInAnonymously();
       print("Signed in with temporary account.");
       final User? user = userCredential.user;
-      final DocumentSnapshot userSnapshot = await _usersCollection.doc(user?.uid).get();
+      final DocumentSnapshot userSnapshot =
+          await _usersCollection.doc(user?.uid).get();
       if (!userSnapshot.exists) {
         // User does not exist in Firestore, add them
         await _usersCollection.doc(user?.uid).set({
