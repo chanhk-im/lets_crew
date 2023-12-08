@@ -40,7 +40,8 @@ class MainDrawer extends StatelessWidget {
                   style: TextStyle(color: colorScheme.onPrimary, fontSize: 12),
                 ),
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.transparent),
                   elevation: MaterialStateProperty.all(0),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
@@ -62,7 +63,7 @@ class MainDrawer extends StatelessWidget {
                 color: colorScheme.onPrimary,
               ),
               label: Text(
-                '모든 동아리 리크루팅 알아보기',
+                '모든 동아리 페이지 보기',
                 style: TextStyle(color: colorScheme.onPrimary, fontSize: 12),
               ),
               style: ButtonStyle(
@@ -89,10 +90,12 @@ class MainDrawer extends StatelessWidget {
                     ),
                     label: Text(
                       '동아리 페이지 추가하기',
-                      style: TextStyle(color: colorScheme.onPrimary, fontSize: 12),
+                      style:
+                          TextStyle(color: colorScheme.onPrimary, fontSize: 12),
                     ),
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.transparent),
                       elevation: MaterialStateProperty.all(0),
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(
