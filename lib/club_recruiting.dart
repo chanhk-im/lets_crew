@@ -12,7 +12,8 @@ class ClubRecruitingPage extends StatefulWidget {
   ClubRecruitingPage({required this.club});
 
   @override
-  _ClubRecruitingPageState createState() => _ClubRecruitingPageState(club: club);
+  _ClubRecruitingPageState createState() =>
+      _ClubRecruitingPageState(club: club);
 }
 
 class _ClubRecruitingPageState extends State<ClubRecruitingPage> {
@@ -27,44 +28,45 @@ class _ClubRecruitingPageState extends State<ClubRecruitingPage> {
         title: Text('Club Recruiting'),
         backgroundColor: Colors.transparent,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Consumer<AppState>(builder: (context, appState, _) {
-          appState.fetchLatestRecruitingData(club);
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (appState.recruitings.isNotEmpty)
-                Text(
-                  'Recruiting Questions for ${club.name}',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              Divider(),
-              (appState.recruitings.isNotEmpty)
-                  ? Expanded(
-                      child: Column(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Consumer<AppState>(builder: (context, appState, _) {
+            appState.fetchLatestRecruitingData(club);
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (appState.recruitings.isNotEmpty)
+                  Text(
+                    'Recruiting Questions for ${club.name}',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                Divider(),
+                (appState.recruitings.isNotEmpty)
+                    ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ..._buildRecruitingFormFields(appState.recruitings),
-                          Spacer(),
                           ElevatedButton(
                             onPressed: () {
-                              _submitAnswer(appState).then((_) => Navigator.pop(context));
+                              _submitAnswer(appState)
+                                  .then((_) => Navigator.pop(context));
                             },
                             child: Text('Submit Application'),
                           ),
                         ],
-                      ),
-                    )
-                  : Text("No recruiting!"),
-            ],
-          );
-        }),
+                      )
+                    : Text("No recruiting!"),
+              ],
+            );
+          }),
+        ),
       ),
     );
   }
 
-  List<Widget> _buildRecruitingFormFields(List<RecruitingQuestions> recruitings) {
+  List<Widget> _buildRecruitingFormFields(
+      List<RecruitingQuestions> recruitings) {
     List<Widget> formFields = [];
     for (var recruiting in recruitings) {
       for (var index = 0; index < recruiting.questions.length; index++) {
@@ -93,6 +95,7 @@ class _ClubRecruitingPageState extends State<ClubRecruitingPage> {
                   // Save the response to Firebase or a local variable as needed
                   appState.addAnswers(response, index);
                 },
+                maxLines: 5 * question.lengthLong + 1,
               );
             }),
           ),
@@ -113,22 +116,27 @@ class _ClubRecruitingPageState extends State<ClubRecruitingPage> {
         .collection('recruiting_questions')
         .doc(appState.recruitings[0].id);
     await appState.fetchLatestRecruitingDataWithoutUpdate(club);
-    final uidIndex = appState.recruitings[0].submissions
-        .indexWhere((element) => element.uid == FirebaseAuth.instance.currentUser!.uid);
+    final uidIndex = appState.recruitings[0].submissions.indexWhere(
+        (element) => element.uid == FirebaseAuth.instance.currentUser!.uid);
     if (uidIndex >= 0) {
       appState.updateRecruitingAnswer(uidIndex);
       docReference.update({
-        'submissions': List<Map<String, dynamic>>.from(appState.recruitings[0].submissions.map(
+        'submissions': List<Map<String, dynamic>>.from(
+            appState.recruitings[0].submissions.map(
           (e) => e.toJson(),
         )),
       });
     } else {
       docReference.update({
         'submissions': [
-          ...List<Map<String, dynamic>>.from(appState.recruitings[0].submissions.map(
+          ...List<Map<String, dynamic>>.from(
+              appState.recruitings[0].submissions.map(
             (e) => e.toJson(),
           )),
-          {"uid": FirebaseAuth.instance.currentUser!.uid, "answers": appState.answers}
+          {
+            "uid": FirebaseAuth.instance.currentUser!.uid,
+            "answers": appState.answers
+          }
         ]
       });
     }
