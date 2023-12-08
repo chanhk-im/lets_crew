@@ -33,6 +33,7 @@ class _SubmissionListPageState extends State<SubmissionListPage> {
             ),
           ),
         );
+
         formFields.add(
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -44,6 +45,7 @@ class _SubmissionListPageState extends State<SubmissionListPage> {
             }),
           ),
         );
+        formFields.add(Divider());
       }
     }
 
