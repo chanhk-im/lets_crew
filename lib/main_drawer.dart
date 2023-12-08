@@ -25,7 +25,7 @@ class MainDrawer extends StatelessWidget {
             Consumer<AppState>(builder: (context, appState, _) {
               return ElevatedButton.icon(
                 onPressed: () {
-                  appState.setSelectedIndex(3);
+                  appState.setSelectedIndex(2);
                 },
                 icon: Icon(
                   Icons.account_circle_outlined,
@@ -37,8 +37,7 @@ class MainDrawer extends StatelessWidget {
                   style: TextStyle(color: colorScheme.onPrimary, fontSize: 12),
                 ),
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(Colors.transparent),
+                  backgroundColor: MaterialStateProperty.all(Colors.transparent),
                   elevation: MaterialStateProperty.all(0),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(

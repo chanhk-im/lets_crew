@@ -70,26 +70,26 @@ class _ProfilePageState extends State<ProfilePage> {
                 width: 20.w,
               ),
               (FirebaseAuth.instance.currentUser != null)
-              ?Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Text(
-                      "${FirebaseAuth.instance.currentUser!.isAnonymous ? "익명" : FirebaseAuth.instance.currentUser!.displayName!}님"),
-                  SizedBox(
-                    height: 4.h,
-                  ),
-                  Text(FirebaseAuth.instance.currentUser!.isAnonymous
-                      ? "익명"
-                      : FirebaseAuth.instance.currentUser!.email!),
-                  SizedBox(
-                    height: 52.h,
-                  ),
-                ],
-              )
-              : Text("비로그인"),
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Text(
+                            "${FirebaseAuth.instance.currentUser!.isAnonymous ? "익명" : FirebaseAuth.instance.currentUser!.displayName!}님"),
+                        SizedBox(
+                          height: 4.h,
+                        ),
+                        Text(FirebaseAuth.instance.currentUser!.isAnonymous
+                            ? "익명"
+                            : FirebaseAuth.instance.currentUser!.email!),
+                        SizedBox(
+                          height: 52.h,
+                        ),
+                      ],
+                    )
+                  : Text("비로그인"),
             ],
           ),
           SizedBox(
@@ -210,11 +210,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     await FirebaseAuth.instance.signOut();
                     Navigator.pushNamed(context, '/login');
                   },
-                  child: Text("로그아웃")),
+                  child: Text(FirebaseAuth.instance.currentUser!.isAnonymous ? "회원가입 후 이용하기" : "로그아웃")),
               SizedBox(
                 height: 8.h,
               ),
-              Text("회원 탈퇴"),
+              Text(FirebaseAuth.instance.currentUser!.isAnonymous ? "" : "회원 탈퇴"),
             ]),
           ),
           SizedBox(
