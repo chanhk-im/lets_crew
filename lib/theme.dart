@@ -43,6 +43,7 @@ class LetsCrewTheme {
     surface: Color(0xFFFFE68F),
     onSurface: Colors.black,
     brightness: Brightness.light,
+    onSurfaceVariant:Color.fromARGB(255, 255, 198, 55), 
   );
 
   static TextTheme textThemeDefault = TextTheme(

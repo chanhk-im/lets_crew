@@ -101,15 +101,6 @@ class _ClubAllPageState extends State<ClubAllPage> {
                       ));
                 }),
                 title: Text('Clubs'),
-                actions: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/addClub');
-                      },
-                      icon: Icon(
-                        Icons.add,
-                      ))
-                ],
               ),
               body: Column(
                 children: [

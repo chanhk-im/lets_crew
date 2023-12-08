@@ -44,6 +44,7 @@ dependencies:
   firebase_storage: ^11.5.2
   image_picker: ^1.0.4
   ai_barcode_scanner: ^3.4.1
+  wave: ^0.2.2
 
 dev_dependencies:
   flutter_test:

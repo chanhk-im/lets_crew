@@ -43,8 +43,7 @@ class LoginPage extends StatelessWidget {
               ),
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(Size(320.0, 60.0)),
-                backgroundColor:
-                    MaterialStateProperty.all(colorScheme.secondary),
+                backgroundColor: MaterialStateProperty.all(colorScheme.secondary),
                 foregroundColor: MaterialStateProperty.all(Colors.white),
               ),
             ),
@@ -67,12 +66,6 @@ class LoginPage extends StatelessWidget {
                 fixedSize: MaterialStateProperty.all(Size(320.0, 60.0)),
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/');
-              },
-              child: Text('next'),
             ),
           ],
         ),
