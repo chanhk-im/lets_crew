@@ -100,17 +100,8 @@ class _HomePageState extends State<HomePage> {
             return Scaffold(
               appBar: AppBar(
                 title: Text('HOME'),
-                actions: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/addClub');
-                      },
-                      icon: Icon(
-                        Icons.add,
-                      ))
-                ],
               ),
-              drawer: MainDrawer(colorScheme: colorScheme, isLoggedIn: isLoggedIn),
+              drawer: MainDrawer(colorScheme: colorScheme, isLoggedIn: isLoggedIn, userData: userData),
               body: FutureBuilder<List<Widget>>(
                 future: _buildGridCards(context),
                 builder: (context, snapshot) {

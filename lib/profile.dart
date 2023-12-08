@@ -44,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
               if (userData?.name != null) {
                 isLoggedIn = "프로필 확인하기";
               }
-              return MainDrawer(colorScheme: colorScheme, isLoggedIn: isLoggedIn);
+              return MainDrawer(colorScheme: colorScheme, isLoggedIn: isLoggedIn, userData: userData);
             }
           }),
       body: SingleChildScrollView(

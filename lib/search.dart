@@ -50,15 +50,6 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text('HOME'),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/addClub');
-                },
-                icon: Icon(
-                  Icons.add,
-                ))
-          ],
         ),
         drawer: FutureBuilder<UserModel?>(
             future: _userRepository.readUser(FirebaseAuth.instance.currentUser!.uid),
@@ -74,7 +65,7 @@ class _SearchPageState extends State<SearchPage> {
                 if (userData?.name != null) {
                   isLoggedIn = "프로필 확인하기";
                 }
-                return MainDrawer(colorScheme: colorScheme, isLoggedIn: isLoggedIn);
+                return MainDrawer(colorScheme: colorScheme, isLoggedIn: isLoggedIn, userData: userData);
               }
             }),
         body: Column(
@@ -126,7 +117,16 @@ class _SearchPageState extends State<SearchPage> {
                 height: 1.0,
                 color: Colors.grey,
               ),
+            if (searchResult.isNotEmpty)
+              const SizedBox(
+                height: 10,
+              ),
             TextButton(
+              style: ButtonStyle(
+                fixedSize: MaterialStateProperty.all(Size(320.0, 60.0)),
+                backgroundColor: MaterialStateProperty.all(colorScheme.secondary),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -161,7 +161,10 @@ class _SearchPageState extends State<SearchPage> {
                   },
                 );
               },
-              child: Text('ㅗㅗㅗ'),
+              child: Text(
+                'QR Code Scanner',
+                style: LetsCrewTheme.textThemeHeading.bodyText1,
+              ),
             ),
           ],
         ));
